@@ -1,7 +1,12 @@
 package controller;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
+import client.RequeteCalculatrice;
 import model.Addition;
 import model.Operation;
+import model.OperationModel;
 import settings.OperationFactory;
 import view.Interface;
 
@@ -9,15 +14,24 @@ public class ControlOperation {
 	private Interface view;
 	private Operation model;
 	
-	public ControlOperation(Interface interf) {
+	public ControlOperation() throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
 		super();
-		this.view = interf;
 	}
 
 	public void checkOperation(double a, String ope, double b) {
-		model = OperationFactory.initOperation(ope);
+		//model = OperationFactory.initOperation(ope);
+		OperationModel model = new OperationModel();
+		model.setX(a);
+		model.setOperation(ope);
+		model.setY(b);
 		
-		view.afficherResultat(model.calculer(a,b));
+		try {
+			RequeteCalculatrice.call(model);
+		} catch (ClassNotFoundException | IOException | InterruptedException e) {
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA");
+			e.printStackTrace();
+		} 
+		
 	}
 	
 	public Interface getInterf() {

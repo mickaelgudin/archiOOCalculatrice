@@ -1,18 +1,24 @@
 package view;
 
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import client.RequeteCalculatrice;
 import controller.ControlOperation;
+import model.Operation;
+import settings.OperationFactory;
 
 public class Interface {
 	private Scanner sc = new Scanner(System.in);
 	private ControlOperation controller;
 	
-	public void afficher() {
+	public void afficher() throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
 		double a, b;
 		String operation;
 	
+		controller = new ControlOperation();
 		operation = sc.next();
 		
 		String elements[] = operation.split("\\+|\\-");
@@ -27,6 +33,7 @@ public class Interface {
 		
 		b = Double.valueOf(elements[1]);
 		
+		controller.setInterf(this);
 		controller.checkOperation(a, operation, b);
 	}
 	
@@ -41,6 +48,5 @@ public class Interface {
 
 	public void setControl(ControlOperation control) {
 		this.controller = control;
-	}
-	
+	}	
 }
