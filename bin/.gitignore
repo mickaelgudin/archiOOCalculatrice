@@ -1,8 +1,4 @@
-/serveur/
-/model/
-/controller/
 /settings/
-/view/
-/Serveur.class
-/Client.class
-/client/
+/welcome.properties
+/welcome_fr.properties
+/welcome_en.properties
