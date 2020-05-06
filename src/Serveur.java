@@ -14,7 +14,7 @@ import view.Interface;
 public class Serveur {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
-		String lang = "fr";
+		String lang = "en";
 		
 		if(lang.equals("fr"))
 			ApplicationProperties.getInstance("C:\\Users\\Mike\\eclipse-workspace\\archiOOCalculatrice\\src\\welcome_fr.properties");
@@ -30,7 +30,6 @@ public class Serveur {
 				System.out.println(ApplicationProperties.readProperty(ExceptionEnum.getNameFromCode(e.getCode()),""));
 			}
 			else {
-				System.out.println("lang : "+lang);
 				System.out.println(((CalculatriceException) e).getDefaultMessage());
 			}
 		}

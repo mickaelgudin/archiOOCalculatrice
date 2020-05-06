@@ -10,7 +10,7 @@ import view.Interface;
 public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
-		String lang = "fr";
+		String lang = "en";
 		
 		if(lang.equals("fr"))
 			ApplicationProperties.getInstance("C:\\Users\\Mike\\eclipse-workspace\\archiOOCalculatrice\\src\\welcome_fr.properties");
@@ -29,7 +29,6 @@ public class Client {
 					System.out.println(ApplicationProperties.readProperty(ExceptionEnum.getNameFromCode(e.getCode()),""));
 				}
 				else {
-					System.out.println("lang : "+lang);
 					System.out.println(((CalculatriceException) e).getDefaultMessage());
 				}
 			}
