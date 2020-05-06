@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import client.RequeteCalculatrice;
-import model.Addition;
 import settings.ApplicationProperties;
+import settings.CalculatriceException;
+import settings.ExceptionEnum;
 import view.Interface;
 
 public class Client {
@@ -16,13 +17,22 @@ public class Client {
 		else
 			ApplicationProperties.getInstance("C:\\Users\\Mike\\eclipse-workspace\\archiOOCalculatrice\\src\\welcome_en.properties");
 		
-		System.out.println(ApplicationProperties.readProperty("welcome", "erreur"));
+		System.out.println(ApplicationProperties.readProperty("welcome_client", "erreur"));
 		
 		
 		Interface i = new Interface();
 		while(true) {
-			
-			i.afficher();
+			try {
+				i.afficher();
+			} catch (CalculatriceException e) {
+				if(lang.equals("fr")) {
+					System.out.println(ApplicationProperties.readProperty(ExceptionEnum.getNameFromCode(e.getCode()),""));
+				}
+				else {
+					System.out.println("lang : "+lang);
+					System.out.println(((CalculatriceException) e).getDefaultMessage());
+				}
+			}
 		}
 	}
 

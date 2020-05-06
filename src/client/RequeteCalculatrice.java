@@ -2,12 +2,15 @@ package client;
 
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.Operation;
 import model.OperationModel;
+import settings.CalculatriceException;
+import settings.ExceptionEnum;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -35,9 +38,18 @@ public class RequeteCalculatrice {
         oos.writeObject(model);
         
         ois = new ObjectInputStream(socket.getInputStream());
-        double result = (double) ois.readObject();
-        LOGGER.log(Level.INFO, "Received response : " + result);
         
+        double result = 0;
+        try {
+        	result = (double) ois.readObject();
+        	LOGGER.log(Level.INFO, "Received response : " + result);
+        } catch(SocketException e) {
+        	e.getMessage();
+        	LOGGER.log(Level.INFO, "Received response : \nServeur Disconned due to issue, see the display of the server");
+        }
+        
+        
+      
         socket.close();
 
         return result;

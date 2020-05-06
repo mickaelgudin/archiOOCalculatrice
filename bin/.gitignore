@@ -1,4 +1,5 @@
-/settings/
-/welcome.properties
-/welcome_fr.properties
-/welcome_en.properties
+/client/
+/serveur/
+/controller/
+/model/
+/view/
