@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import model.Calculate;
 import model.Operation;
 import model.OperationModel;
+import settings.ApplicationProperties;
 import settings.CalculatriceException;
 import settings.ExceptionEnum;
 
@@ -22,11 +23,11 @@ public class ServiceCalculatrice {
     
     public static void lunch() throws IOException, ClassNotFoundException, CalculatriceException{
     	server = new ServerSocket(PORT);
-	    LOGGER.log(Level.INFO, "Server running");
+	    LOGGER.log(Level.INFO, ApplicationProperties.readProperty("server_run",""));
     	
         while(true){
         	Socket socket = server.accept();
-        	LOGGER.log(Level.INFO, "Connexion established");
+        	LOGGER.log(Level.INFO, ApplicationProperties.readProperty("connection_set",""));
 	            
         	
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -34,17 +35,19 @@ public class ServiceCalculatrice {
 
             OperationModel operation = (OperationModel) ois.readObject();
             
-            if(operation.getY() == 0) {
+            if(operation.getY() == 0 && operation.getOperation().equals("/")) {
             	throw new CalculatriceException(ExceptionEnum.DIVISION_BY_ZERO.getCode(), ExceptionEnum.DIVISION_BY_ZERO.getDefaultMessage());
             }
             
-            LOGGER.log(Level.INFO, "Message Received: " + operation);
-
+            LOGGER.log(Level.INFO, ApplicationProperties.readProperty("message","")+ operation);
+            
             double result = Calculate.calculate(operation);
             oos.writeObject(result);
            
-            LOGGER.log(Level.INFO, "Response sent: " + result);
-            
+            LOGGER.log(Level.INFO, ApplicationProperties.readProperty("response","") + result);
+
+
+
         }
     }
 

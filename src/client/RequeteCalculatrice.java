@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import model.Operation;
 import model.OperationModel;
+import settings.ApplicationProperties;
 import settings.CalculatriceException;
 import settings.ExceptionEnum;
 
@@ -30,11 +31,10 @@ public class RequeteCalculatrice {
         Socket socket = new Socket(host.getHostName(), PORT);
         
         oos = new ObjectOutputStream(socket.getOutputStream());
-        LOGGER.log(Level.INFO, "Connection to server established");
-        System.out.println("REQUETE CALCULATRICE");
+        LOGGER.log(Level.INFO, ApplicationProperties.readProperty("connection",""));
         
         
-        LOGGER.log(Level.INFO, "Sending request to Socket Server");
+        LOGGER.log(Level.INFO, ApplicationProperties.readProperty("send_request",""));
         oos.writeObject(model);
         
         ois = new ObjectInputStream(socket.getInputStream());
@@ -42,13 +42,12 @@ public class RequeteCalculatrice {
         double result = 0;
         try {
         	result = (double) ois.readObject();
-        	LOGGER.log(Level.INFO, "Received response : " + result);
+        	LOGGER.log(Level.INFO, ApplicationProperties.readProperty("request_received","")+ result);
         } catch(SocketException e) {
         	e.getMessage();
-        	LOGGER.log(Level.INFO, "Received response : \nServeur Disconned due to issue, see the display of the server");
-        }
-        
-        
+        	LOGGER.log(Level.INFO, ApplicationProperties.readProperty("erreur_serveur",""));
+        	System.exit(1);
+        }       
       
         socket.close();
 

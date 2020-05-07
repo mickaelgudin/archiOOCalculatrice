@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 
 import client.RequeteCalculatrice;
 import model.Addition;
+import model.Calculate;
 import model.Operation;
 import model.OperationModel;
 import settings.CalculatriceException;
@@ -14,7 +15,7 @@ import view.Interface;
 
 public class ControlOperation {
 	private Interface view;
-	private Operation model;
+	private OperationModel model;
 	
 	public ControlOperation() throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
 		super();
@@ -27,6 +28,15 @@ public class ControlOperation {
 		
 		double a, b;
 		
+		for(String s : elements) {
+			for(char c: s.toCharArray()) {
+				if(!Character.isDigit(c)) {
+					throw new CalculatriceException(ExceptionEnum.TYPE_ERROR.getCode(), ExceptionEnum.TYPE_ERROR.getDefaultMessage());
+				}
+			}
+		}
+	
+		
 		a = Double.valueOf(elements[0]);
 		
 		for(char c: operation.toCharArray()) {
@@ -37,12 +47,18 @@ public class ControlOperation {
 		
 		b = Double.valueOf(elements[1]);
 		
+		if(b==0 && operation.equals("/")) {
+			throw new CalculatriceException(ExceptionEnum.DIVISION_BY_ZERO.getCode(), ExceptionEnum.DIVISION_BY_ZERO.getDefaultMessage());
+		}
+		
 		this.checkOperation(a, operation, b);
 	}
 	
 
 	public void checkOperation(double a, String ope, double b) {
 		OperationModel model = new OperationModel();
+		//rajouté pour faire les tests
+		this.setModel(model);
 		model.setX(a);
 		model.setOperation(ope);
 		model.setY(b);
@@ -61,5 +77,14 @@ public class ControlOperation {
 	
 	public void setInterf(Interface interf) {
 		this.view = interf;
+	}
+
+	//rajouts pour faire les tests	
+	public OperationModel getModel() {
+		return model;
+	}
+
+	public void setModel(OperationModel model) {
+		this.model = model;
 	}
 }

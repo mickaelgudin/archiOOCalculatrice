@@ -1,8 +1,9 @@
 package settings;
 
 public enum ExceptionEnum {
-    DIVISION_BY_ZERO(1, "division by zero not authorized"),
-    UNKNOWN_OPERATION(2, "operation not implemented yet");
+    DIVISION_BY_ZERO(1, "Division by zero not authorized"),
+    UNKNOWN_OPERATION(2, "Operation not implemented yet"),
+	TYPE_ERROR(3, "Error on type, check if you have the good format with number+symbol+number ");
     
     private final int code;
     private final String defaultMessage;

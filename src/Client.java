@@ -10,12 +10,12 @@ import view.Interface;
 public class Client {
 
 	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
-		String lang = "en";
+		String lang = "fr";
 		
 		if(lang.equals("fr"))
-			ApplicationProperties.getInstance("C:\\Users\\Mike\\eclipse-workspace\\archiOOCalculatrice\\src\\welcome_fr.properties");
+			ApplicationProperties.getInstance("src/ressources/welcome_fr.properties");
 		else
-			ApplicationProperties.getInstance("C:\\Users\\Mike\\eclipse-workspace\\archiOOCalculatrice\\src\\welcome_en.properties");
+			ApplicationProperties.getInstance("src/ressources/welcome_en.properties");
 		
 		System.out.println(ApplicationProperties.readProperty("welcome_client", "erreur"));
 		
